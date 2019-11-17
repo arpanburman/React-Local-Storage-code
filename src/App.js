@@ -1,8 +1,6 @@
 import React, { Component }  from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './bootstrap.css';
-import ReactDOM from 'react-dom';
 
 class App extends Component {
   documentData;
@@ -26,13 +24,12 @@ handleFormSubmit(e) {
  localStorage.setItem('document',JSON.stringify(this.state));
 }
 
-// React Life Cycle
 componentDidMount() {
   this.documentData = JSON.parse(localStorage.getItem('document'));
 
   if (localStorage.getItem('document')) {
       this.setState({
-          title: this.documentData.title,
+         title: this.documentData.title,
          description: this.documentData.description,
          price: this.documentData.price
   })
@@ -49,7 +46,8 @@ render() {
   return (
       <div className="container">
         <div class="jumbotron">
-            <h1 class="display-4">Store Data Using Local Storage!</h1>
+            <h1 class="display-4">Store Data Using Local Storage React!!</h1>
+            <hr class="my-4"></hr>
         </div>
         <div class="card">
         <div class="card-body">
@@ -81,6 +79,12 @@ render() {
           </form>
         </div>
         </div>
+        
+        <footer class="page-footer font-small blue">
+          <div class="footer-copyright text-center py-3">© 2019 Copyright: 
+            <a href="https://github.com/arpanburman/localStorageReact/"> Arpan Burman </a>
+          </div>
+        </footer>
       </div>
   )
 }
