@@ -1,26 +1,89 @@
-import React from 'react';
+import React, { Component }  from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './bootstrap.css';
+import ReactDOM from 'react-dom';
 
-function App() {
+class App extends Component {
+  documentData;
+  constructor(props) {
+      super(props);
+      this.handleChange = this.handleChange.bind(this);
+      this.handleFormSubmit = this.handleFormSubmit.bind(this);
+      this.state = {
+          title: '',
+          description: '',
+          price: ''
+      }
+  }
+
+handleChange= (e)=> {
+  this.setState({[e.target.name]:e.target.value});
+}
+// on form submit...
+handleFormSubmit(e) {
+  e.preventDefault()
+ localStorage.setItem('document',JSON.stringify(this.state));
+}
+
+// React Life Cycle
+componentDidMount() {
+  this.documentData = JSON.parse(localStorage.getItem('document'));
+
+  if (localStorage.getItem('document')) {
+      this.setState({
+          title: this.documentData.title,
+         description: this.documentData.description,
+         price: this.documentData.price
+  })
+} else {
+  this.setState({
+      title: '',
+      description: '',
+      price: ''
+  })
+}
+}
+
+render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <div className="container">
+        <div class="jumbotron">
+            <h1 class="display-4">Store Data Using Local Storage!</h1>
+        </div>
+        <div class="card">
+        <div class="card-body">
+          <form onSubmit={this.handleFormSubmit}>
+              <div className="form-group row">
+                  <label class="col-sm-2 col-form-label">Title</label>
+                  <div class="col-sm-9">
+                  <input type="text" name="title" className="form-control" value={this.state.title} onChange={this.handleChange} />
+                  </div>
+              </div>
+              <div className="form-group row">
+                  <label class="col-sm-2 col-form-label">Description</label>
+                  <div class="col-sm-9">
+                  <input type="text" name="description" className="form-control" value={this.state.description} onChange={this.handleChange} />
+                  </div>
+              </div>
+              <div className="form-group row">
+                  <label class="col-sm-2 col-form-label">Price</label>
+                  <div class="col-sm-9">
+                  <input type="number" name="price" className="form-control" value={this.state.price} onChange={this.handleChange} />
+                  </div>
+              </div>
+              <div className="form-group row">
+              <div class="col-sm-2"></div>
+              <div class="col-sm-9">
+              <button  type="submit" className="btn btn-primary">Submit</button>
+              </div>
+              </div>
+          </form>
+        </div>
+        </div>
+      </div>
+  )
+}
 }
 
 export default App;
